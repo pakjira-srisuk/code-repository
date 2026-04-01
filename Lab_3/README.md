@@ -26,7 +26,7 @@
 
 ### 1.3 การแบ่ง Train / Validation
 
-ใช้วิธีสุ่มแบ่งข้อมูล: 80% สำหรับ training และ 20% สำหรับ testing
+ใช้วิธีสุ่มแบ่งข้อมูล : 80% สำหรับ training และ 20% สำหรับ testing
 
 แม้ว่าวิธีนี้จะสะดวกและนิยมใช้ แต่มีข้อจำกัดคือ spatial autocorrelation ซึ่งอาจทำให้ค่าความแม่นยำสูงกว่าความเป็นจริง เนื่องจากข้อมูล train และ test อยู่ใกล้กันในเชิงพื้นที่
 
@@ -47,89 +47,107 @@ Spectral Indices
 
 การรวม spectral bands และ indices ช่วยเพิ่มความสามารถของโมเดลในการแยกประเภทพื้นผิวที่มีลักษณะคล้ายกัน
 
-🤖 ภารกิจที่ 2: Algorithm Comparison
-โมเดลที่ใช้ในการทดลอง
-Random Forest (50 trees)
-Random Forest (100 trees)
-Gradient Tree Boost
-ผลการทดลอง
+## 2. เปรียบเทียบอัลกอริทึม
+
+### โมเดลที่ใช้ในการทดลอง
+
+- Random Forest (50 trees)
+- Random Forest (100 trees)
+- Gradient Tree Boost
+
+### ผลการทดลอง
+
 Random Forest (50 Trees)
-Overall Accuracy: 0.7290
-Kappa: 0.5135
+- Overall Accuracy: 0.7290
+- Kappa: 0.5135
+  
 Random Forest (100 Trees)
-Overall Accuracy: 0.7344
-Kappa: 0.5272
+- Overall Accuracy: 0.7344
+- Kappa: 0.5272
+  
 Gradient Tree Boost
-Overall Accuracy: 0.7190
-Kappa: 0.4957
-การวิเคราะห์ผล
+- Overall Accuracy: 0.7190
+- Kappa: 0.4957
+
+### การวิเคราะห์ผล
 
 จากผลการทดลองพบว่า Random Forest ที่ใช้จำนวนต้นไม้ 100 trees ให้ผลลัพธ์ดีที่สุด โดยมีค่าความแม่นยำและค่า Kappa สูงสุด การเพิ่มจำนวนต้นไม้ช่วยลดความแปรปรวนของโมเดลและทำให้ผลลัพธ์มีเสถียรภาพมากขึ้น
 
 ในขณะที่ Gradient Tree Boost ให้ผลลัพธ์ใกล้เคียง แต่มีประสิทธิภาพต่ำกว่าเล็กน้อย ซึ่งอาจเกิดจากข้อจำกัดของจำนวน training samples หรือความซับซ้อนของข้อมูล
 
-การวิเคราะห์ราย Class (F1-score)
+### การวิเคราะห์ราย Class (F1-score)
 
-พบว่า:
-
-Forest มีค่าความแม่นยำสูงที่สุด
-Agriculture มีค่าความแม่นยำต่ำที่สุด
+- Forest มีค่าความแม่นยำสูงที่สุด
+- Agriculture มีค่าความแม่นยำต่ำที่สุด
 
 แสดงให้เห็นว่าโมเดลสามารถจำแนกพื้นที่ป่าได้ดี แต่มีความยากในการแยกพื้นที่เกษตรกรรมออกจาก class อื่น
 
-📊 ภารกิจที่ 3: Feature Importance
-ผลการวิเคราะห์
+## 3. วิเคราะห์ Feature Importance
 
-จาก Random Forest พบว่า feature ที่มีความสำคัญสูง ได้แก่:
+### ผลการวิเคราะห์
 
-NDVI
-B8 (Near Infrared)
-NDWI
-การตีความเชิงกายภาพ
+จาก Random Forest พบว่า feature ที่มีความสำคัญสูง ได้แก่
+
+- NDVI
+- B8 (Near Infrared)
+- NDWI
+  
+### การตีความเชิงกายภาพ
 
 NDVI มีบทบาทสำคัญในการแยกพื้นที่พืชพรรณ เนื่องจากพืชสะท้อนแสงในช่วง near-infrared สูง ซึ่งสอดคล้องกับหลักการทาง remote sensing
 
 NDWI ช่วยแยกแหล่งน้ำออกจากพื้นดิน ขณะที่ NDBI มีบทบาทในการแยกพื้นที่เมือง
 
-การทดลองตัด Feature (Ablation Test)
+### การทดลองตัด Feature (Ablation Test)
 
-เมื่อทำการตัด NDVI ออก พบว่า:
-
-Accuracy เปลี่ยนจาก 0.7290 → 0.7299
+เมื่อทำการตัด NDVI ออก พบว่า Accuracy เปลี่ยนจาก 0.7290 → 0.7299
 
 ผลลัพธ์แสดงให้เห็นว่า NDVI มีความสำคัญ แต่ไม่ใช่ปัจจัยเดียวที่กำหนดประสิทธิภาพของโมเดล เนื่องจากข้อมูลจาก B8 สามารถชดเชยได้บางส่วน
 
-🌫️ ภารกิจที่ 4: Uncertainty Assessment
-การวิเคราะห์ Confusion Matrix
+## 4. ประเมินความไม่แน่นอน
 
-พบว่า class ที่มีความสับสนสูง ได้แก่:
+### การวิเคราะห์ Confusion Matrix
 
-Agriculture vs Forest
-Agriculture vs Wetland Vegetation
-สาเหตุของความไม่แน่นอน
-พื้นที่เกษตรกรรมมีลักษณะคล้าย vegetation
-พื้นที่ชุ่มน้ำมีทั้งน้ำและพืช ทำให้มี spectral overlap
-ลักษณะ seasonal ของพืชส่งผลต่อค่าการสะท้อนแสง
-การประเมินความน่าเชื่อถือ
+พบว่า class ที่มีความสับสนสูง ได้แก่
 
-โมเดลมีความแม่นยำสูงใน:
+- Agriculture vs Forest
+- Agriculture vs Wetland Vegetation
 
-Water
-Forest
+### สาเหตุของความไม่แน่นอน
+- พื้นที่เกษตรกรรมมีลักษณะคล้าย vegetation
+- พื้นที่ชุ่มน้ำมีทั้งน้ำและพืช ทำให้มี spectral overlap
+- ลักษณะ seasonal ของพืชส่งผลต่อค่าการสะท้อนแสง
+  
+### การประเมินความน่าเชื่อถือ
 
-และมีความไม่แน่นอนใน:
-
-Agriculture
-Wetland Vegetation
+- โมเดลมีความแม่นยำสูงใน Water และ Forest
+- มีความไม่แน่นอนใน Agriculture และ Wetland Vegetation
 
 ดังนั้น แผนที่นี้เหมาะสำหรับการวิเคราะห์ในระดับภาพรวม (regional scale) แต่ไม่เหมาะสำหรับการใช้งานในระดับรายละเอียดสูงโดยไม่มีข้อมูลภาคสนามเพิ่มเติม
 
-🔍 การตอบคำถามเชิงวิเคราะห์
-1. ผลของการเพิ่ม Training Samples
+## คำถามสำหรับใช้คิด
+### 1. ถ้าเพิ่ม Training Samples อีก 2 เท่า ความแม่นยำจะเพิ่มขึ้นเท่าไหร่?
 
-การเพิ่มจำนวน training samples คาดว่าจะช่วยเพิ่มความแม่นยำของโมเดล แต่ในอัตราที่ลดลง (diminishing returns) เนื่องจากโมเดลได้เรียนรู้ pattern หลักไปแล้ว
+Random Forest (50 trees) → Accuracy = 0.7290
 
-2. Spatial Autocorrelation
+Random Forest (100 trees) → Accuracy = 0.7344
+
+จะเห็นว่าแม้มีการเพิ่ม complexity ของโมเดล (จำนวน trees) ความแม่นยำเพิ่มขึ้นเพียงเล็กน้อย (~0.5%)
+
+ดังนั้น หากเพิ่มจำนวน training samples เป็น 2 เท่า ความแม่นยำมีแนวโน้มเพิ่มขึ้น เล็กน้อย (ประมาณ 1–3%) ไม่เพิ่มแบบ linear เนื่องจากเกิด diminishing returns
+
+เหตุผล
+- ข้อมูลเดิมครอบคลุม pattern หลักแล้ว
+training samples 6000 จุดถือว่าเพียงพอในระดับหนึ่ง
+- คุณภาพของ label สำคัญกว่าปริมาณ
+เนื่องจากใช้ Dynamic World ซึ่งมี noise → เพิ่ม sample = เพิ่ม noise ด้วย
+- ปัญหาหลักคือ class overlap ไม่ใช่ data scarcity
+เช่น Agriculture vs Forest ที่มี F1-score ต่ำ (~0.19)
+
+สรุปแล้ว การเพิ่ม training samples จะช่วยได้แต่ไม่ใช่ปัจจัยหลักในการเพิ่ม accuracy ในกรณีนี้ควรเน้นที่ feature engineering และ label quality
+
+
+### 2. Spatial Autocorrelation
 
 การใช้ random sampling ส่งผลให้ข้อมูล train และ test มีความใกล้เคียงกันในเชิงพื้นที่ ทำให้ค่าความแม่นยำที่รายงานสูงกว่าความเป็นจริง
 
