@@ -166,36 +166,45 @@ Accuracy ~0.73 ถือว่าปานกลาง แต่ F1-score ขอ
 
 สรุปแล้ว Spatial autocorrelation ทำให้ค่า Accuracy และ Kappa สูงเกินจริงและความสามารถ generalization ของโมเดลต่ำกว่าที่ประเมิน
 
+### 3. Class ใดที่โมเดลทำได้แย่ที่สุด แก้ได้ด้วยวิธีใดบ้าง?
+
+Agriculture แย่ที่สุด
+
+F1-score ≈ 0.19 (RF)
+
+F1-score ≈ 0.17 (GTB)
+
+### วิเคราะห์สาเหตุ
+- Spectral similarity โดย Agriculture มีลักษณะคล้าย Forest และ Wetland , NDVI สูงเหมือน vegetation
+- Seasonal variability นาข้าวมีหลาย stage , น้ำ → เหมือน water , เขียว → เหมือน forest
+- Label noise จาก Dynamic World บาง pixel อาจถูก label ผิด
+
+### แนวทางแก้ไข
+- เพิ่ม Features
+  
+NDMI → ความชื้น
+
+EVI → vegetation sensitivity
+
+Texture → spatial pattern
+
+- ใช้ Temporal Data
+
+ใช้หลายช่วงเวลา : planting , harvesting ซึ่งจะช่วยแยก agriculture ได้ดีขึ้น
+
+- ปรับ Training Strategy โดยใช้ stratified sampling และเพิ่ม sample ของ agriculture โดยเฉพาะ
+
+- ใช้ Model ที่ซับซ้อนขึ้น เช่น Deep Learning (CNN, U-Net)
+
+### 4. ถ้าต้องทำซ้ำ Lab นี้สำหรับพื้นที่อื่น อะไรคือสิ่งที่ต้องเปลี่ยน และอะไรที่ใช้ซ้ำได้?
 
 
+### สิ่งที่ต้องเปลี่ยน 
+- ขอบเขตพื้นที่ศึกษา 
+- Training data
+- Class Definition
 
-
-
-
-
-
-
-การใช้ random sampling ส่งผลให้ข้อมูล train และ test มีความใกล้เคียงกันในเชิงพื้นที่ ทำให้ค่าความแม่นยำที่รายงานสูงกว่าความเป็นจริง
-
-3. Class ที่มีประสิทธิภาพต่ำที่สุด
-
-Agriculture เป็น class ที่มีความแม่นยำต่ำที่สุด เนื่องจากมีความคล้ายคลึงกับ class อื่นในเชิง spectral
-
-แนวทางปรับปรุง:
-
-เพิ่ม spectral indices เช่น NDMI
-ใช้ข้อมูลหลายช่วงเวลา (temporal data)
-เพิ่ม training samples
-4. การประยุกต์ใช้ในพื้นที่อื่น
-
-สิ่งที่ต้องปรับ:
-
-ขอบเขตพื้นที่ศึกษา (ROI)
-training data
-นิยาม class
-
-สิ่งที่สามารถใช้ซ้ำได้:
-
-workflow
-โมเดล
-feature engineering
+### สิ่งที่สามารถใช้ซ้ำได้
+- Workflow
+- Model
+- Feature Engineering
