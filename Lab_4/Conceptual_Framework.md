@@ -75,6 +75,6 @@ UHS = (0.4 × LST) + (0.3 × NDBI) + (0.2 × NDVI) + (0.1 × Distance)
 
 การกำหนดน้ำหนักนี้อิงจากหลัก Urban Climate , งานวิจัย UHI , Expert judgment
 
-## แนวคิดการตรวจสอบ (Validation Concept)
+## Validate
 
 เนื่องจากไม่มีข้อมูล Ground Truth โดยตรง จึงใช้ LST เป็น proxy โดยมีแนวคิดว่าพื้นที่ที่มีค่า UHS สูง ควรสอดคล้องกับพื้นที่ที่มี LST สูง
