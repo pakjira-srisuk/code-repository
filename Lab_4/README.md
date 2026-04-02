@@ -23,7 +23,7 @@ X<sub>norm</sub> = (X - X<sub>min</sub>) / (X<sub>max</sub> - X<sub>min</sub>)
 (1) LST
 - Normalize แบบตรง
 - ค่า LST สูง → เสี่ยงสูง
-- 
+  
 (2) NDVI
 - Normalize ก่อน แล้วใช้ (1 - NDVI)
 เพราะ NDVI สูง = พื้นที่เย็น จึงต้องกลับค่าให้ “ค่าสูง = เสี่ยงสูง”
@@ -31,7 +31,7 @@ X<sub>norm</sub> = (X - X<sub>min</sub>) / (X<sub>max</sub> - X<sub>min</sub>)
 (3) NDBI
 - Normalize แบบตรง
 - ค่า NDBI สูง → เมืองมาก → เสี่ยงสูง
-- 
+  
 (4) Distance from Water
 - Normalize ก่อน แล้วกลับค่า (1 - distance)
 
